@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteo de Equipos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Elige tu equipo</h1>
+    <button onclick="seleccionarEquipo()">Hacer Sorteo</button>
+    <p id="resultado"></p>
+
+<script>
+    function seleccionarEquipo() {
+        let equipos = ["Equipo A", "Equipo B", "Equipo C", "Equipo D"];
+        let equipoSeleccionado = equipos[Math.floor(Math.random() * equipos.length)];
+        document.getElementById("resultado").innerText = "Tu equipo es: " + equipoSeleccionado;
+        localStorage.setItem("equipo", equipoSeleccionado);
+        document.querySelector("button").disabled = true;
+    }
+
+    // Evitar que el usuario haga el sorteo más de una vez
+    window.onload = function() {
+        let equipoGuardado = localStorage.getItem("equipo");
+        if (equipoGuardado) {
+            document.getElementById("resultado").innerText = "Tu equipo es: " + equipoGuardado;
+            document.querySelector("button").disabled = true;
+        }
+    };
+  </script>
+</body>
+</html>
