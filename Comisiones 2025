@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteo de Equipos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Elige tu equipo</h1>
+    <button onclick="seleccionarEquipo()">Hacer Sorteo</button>
+    <p id="resultado"></p>
+
+    <script>
+        let equipos = {
+            "Equipo A": 0,
+            "Equipo B": 0,
+            "Equipo C": 0,
+            "Equipo D": 0
+        };
+
+    function seleccionarEquipo() {
+            let equipoSeleccionado = Object.keys(equipos).reduce((a, b) => equipos[a] < equipos[b] ? a : b);
+            equipos[equipoSeleccionado]++;
+            document.getElementById("resultado").innerText = "Tu equipo es: " + equipoSeleccionado;
+            localStorage.setItem("equipo", equipoSeleccionado);
+            localStorage.setItem("equipos", JSON.stringify(equipos));
+            document.querySelector("button").disabled = true;
+    }
+
+    // Evitar que el usuario haga el sorteo más de una vez y restaurar datos
+    window.onload = function() {
+            let equipoGuardado = localStorage.getItem("equipo");
+            if (equipoGuardado) {
+                document.getElementById("resultado").innerText = "Tu equipo es: " + equipoGuardado;
+                document.querySelector("button").disabled = true;
+            }
+            let equiposGuardados = localStorage.getItem("equipos");
+            if (equiposGuardados) {
+              equipos = JSON.parse(equiposGuardados);
+            }
+        };
+    </script>
+</body>
+</html>
